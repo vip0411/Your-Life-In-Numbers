@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Life in Numbers</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            min-height: 100vh;
+        }
+        .orbitron {
+            font-family: 'Orbitron', monospace;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        .pulse-heart {
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .glow {
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+        }
+        .counter-value {
+            background: linear-gradient(90deg, #f093fb, #f5576c, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .breathe {
+            animation: breathe 4s ease-in-out infinite;
+        }
+        @keyframes breathe {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        input[type="date"] {
+            color-scheme: dark;
+        }
+    </style>
+</head>
+<body class="text-white p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4 orbitron glow text-purple-400">Your Life in Numbers</h1>
+            <p class="text-gray-400 text-lg">Discover the fascinating statistics of your existence</p>
+        </header>
+
+        <!-- Date Input -->
+        <div class="flex flex-col items-center mb-12">
+            <label class="text-xl mb-4 text-gray-300">When were you born?</label>
+            <input type="date" id="birthdate" 
+                class="bg-gray-800/50 border border-purple-500/50 rounded-xl px-6 py-4 text-xl focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-500/50 transition-all">
+        </div>
+
+        <!-- Stats Display -->
+        <div id="stats-container" class="hidden">
+            <!-- Age Display -->
+            <div class="text-center mb-12">
+                <div class="stat-card inline-block rounded-2xl px-8 py-6">
+                    <p class="text-gray-400 mb-2">You have been alive for</p>
+                    <div id="age-display" class="text-3xl md:text-5xl font-bold orbitron counter-value"></div>
+                </div>
+            </div>
+
+            <!-- Main Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Heartbeats -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl pulse-heart">❤️</span>
+                        <h3 class="text-xl font-semibold text-pink-400">Heartbeats</h3>
+                    </div>
+                    <p id="heartbeats" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~100,000 beats per day</p>
+                </div>
+
+                <!-- Breaths -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl breathe">🌬️</span>
+                        <h3 class="text-xl font-semibold text-cyan-400">Breaths Taken</h3>
+                    </div>
+                    <p id="breaths" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~20,000 breaths per day</p>
+                </div>
+
+                <!-- Steps -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">👟</span>
+                        <h3 class="text-xl font-semibold text-green-400">Steps Taken</h3>
+                    </div>
+                    <p id="steps" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~7,500 steps per day (avg adult)</p>
+                </div>
+
+                <!-- Meals -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">🍽️</span>
+                        <h3 class="text-xl font-semibold text-orange-400">Meals Eaten</h3>
+                    </div>
+                    <p id="meals" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~3 meals per day</p>
+                </div>
+
+                <!-- Hours Slept -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">😴</span>
+                        <h3 class="text-xl font-semibold text-indigo-400">Hours Slept</h3>
+                    </div>
+                    <p id="sleep" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~8 hours per night</p>
+                </div>
+
+                <!-- Dreams -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">💭</span>
+                        <h3 class="text-xl font-semibold text-purple-400">Dreams Had</h3>
+                    </div>
+                    <p id="dreams" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~4-6 dreams per night</p>
+                </div>
+
+                <!-- Blinks -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">👁️</span>
+                        <h3 class="text-xl font-semibold text-blue-400">Times Blinked</h3>
+                    </div>
+                    <p id="blinks" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~15-20 blinks per minute</p>
+                </div>
+
+                <!-- Laughs -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">😂</span>
+                        <h3 class="text-xl font-semibold text-yellow-400">Times Laughed</h3>
+                    </div>
+                    <p id="laughs" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~15 times per day</p>
+                </div>
+
+                <!-- Words Spoken -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">💬</span>
+                        <h3 class="text-xl font-semibold text-teal-400">Words Spoken</h3>
+                    </div>
+                    <p id="words" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~16,000 words per day</p>
+                </div>
+
+                <!-- Full Moons -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">🌕</span>
+                        <h3 class="text-xl font-semibold text-gray-300">Full Moons Witnessed</h3>
+                    </div>
+                    <p id="moons" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~12-13 per year</p>
+                </div>
+
+                <!-- Hair Growth -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">💇</span>
+                        <h3 class="text-xl font-semibold text-amber-400">Hair Grown</h3>
+                    </div>
+                    <p id="hair" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~15cm per year</p>
+                </div>
+
+                <!-- Skin Cells Shed -->
+                <div class="stat-card rounded-2xl p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-4xl">✨</span>
+                        <h3 class="text-xl font-semibold text-rose-400">Skin Cells Shed</h3>
+                    </div>
+                    <p id="skin" class="text-3xl font-bold orbitron counter-value">0</p>
+                    <p class="text-gray-500 text-sm mt-2">~30-40k cells per minute</p>
+                </div>
+            </div>
+
+            <!-- Fun Facts Section -->
+            <div class="stat-card rounded-2xl p-8 text-center">
+                <h3 class="text-2xl font-bold mb-6 text-purple-400">🎉 Mind-Blowing Facts About Your Life</h3>
+                <div id="fun-facts" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 text-gray-500 text-sm">
+            <p>Statistics are based on average human data. Your actual numbers may vary!</p>
+        </footer>
+    </div>
+
+    <script>
+        const birthdateInput = document.getElementById('birthdate');
+        const statsContainer = document.getElementById('stats-container');
+        let updateInterval;
+
+        // Set max date to today
+        birthdateInput.max = new Date().toISOString().split('T')[0];
+
+        birthdateInput.addEventListener('change', function() {
+            if (this.value) {
+                statsContainer.classList.remove('hidden');
+                if (updateInterval) clearInterval(updateInterval);
+                updateStats();
+                updateInterval = setInterval(updateStats, 100);
+            }
+        });
+
+        function formatNumber(num) {
+            if (num >= 1e12) return (num / 1e12).toFixed(2) + ' trillion';
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + ' billion';
+            if (num >= 1e6) return (num / 1e6).toFixed(2) + ' million';
+            return num.toLocaleString();
+        }
+
+        function updateStats() {
+            const birthDate = new Date(birthdateInput.value);
+            const now = new Date();
+            const ageInMs = now - birthDate;
+            const ageInSeconds = ageInMs / 1000;
+            const ageInMinutes = ageInSeconds / 60;
+            const ageInHours = ageInMinutes / 60;
+            const ageInDays = ageInHours / 24;
+            const ageInYears = ageInDays / 365.25;
+            const ageInMonths = ageInYears * 12;
+
+            // Age display
+            const years = Math.floor(ageInYears);
+            const months = Math.floor((ageInYears - years) * 12);
+            const days = Math.floor(ageInDays % 30.44);
+            const hours = Math.floor(ageInHours % 24);
+            const minutes = Math.floor(ageInMinutes % 60);
+            const seconds = Math.floor(ageInSeconds % 60);
+
+            document.getElementById('age-display').innerHTML = 
+                `${years}<span class="text-lg text-gray-400">y</span> 
+                 ${months}<span class="text-lg text-gray-400">m</span> 
+                 ${days}<span class="text-lg text-gray-400">d</span> 
+                 ${hours}<span class="text-lg text-gray-400">h</span> 
+                 ${minutes}<span class="text-lg text-gray-400">m</span> 
+                 ${seconds}<span class="text-lg text-gray-400">s</span>`;
+
+            // Calculate statistics
+            const heartbeats = Math.floor(ageInDays * 100000); // ~100k per day
+            const breaths = Math.floor(ageInDays * 20000); // ~20k per day
+            const steps = Math.floor(Math.max(0, (ageInYears - 1) * 365.25 * 7500)); // starts walking ~1 year
+            const meals = Math.floor(ageInDays * 3);
+            const sleepHours = Math.floor(ageInDays * 8);
+            const dreams = Math.floor(ageInDays * 5);
+            const blinks = Math.floor(ageInMinutes * 17 * (16/24)); // only while awake
+            const laughs = Math.floor(ageInDays * 15);
+            const words = Math.floor(Math.max(0, (ageInYears - 2) * 365.25 * 16000)); // starts talking ~2 years
+            const moons = Math.floor(ageInDays / 29.53);
+            const hairCm = Math.floor(ageInYears * 15);
+            const skinCells = Math.floor(ageInMinutes * 35000);
+
+            // Update display
+            document.getElementById('heartbeats').textContent = formatNumber(heartbeats);
+            document.getElementById('breaths').textContent = formatNumber(breaths);
+            document.getElementById('steps').textContent = formatNumber(steps);
+            document.getElementById('meals').textContent = formatNumber(meals);
+            document.getElementById('sleep').textContent = formatNumber(sleepHours);
+            document.getElementById('dreams').textContent = formatNumber(dreams);
+            document.getElementById('blinks').textContent = formatNumber(blinks);
+            document.getElementById('laughs').textContent = formatNumber(laughs);
+            document.getElementById('words').textContent = formatNumber(words);
+            document.getElementById('moons').textContent = formatNumber(moons);
+            document.getElementById('hair').textContent = (hairCm / 100).toFixed(1) + ' meters';
+            document.getElementById('skin').textContent = formatNumber(skinCells);
+
+            // Fun facts
+            const earthRotations = Math.floor(ageInDays);
+            const earthOrbits = (ageInYears).toFixed(2);
+            const bloodPumped = Math.floor(ageInDays * 7570); // liters
+            const nailsGrown = (ageInYears * 3.5).toFixed(1); // cm per year
+            const foodEaten = Math.floor(ageInYears * 730); // kg per year
+            const waterDrank = Math.floor(ageInDays * 2); // liters
+            const distanceWalked = Math.floor(steps * 0.0008); // km
+            const timeOnPhone = Math.floor(Math.max(0, (ageInYears - 10) * 365.25 * 4)); // hours (from age 10)
+
+            document.getElementById('fun-facts').innerHTML = `
+                <div class="bg-white/5 rounded-lg p-4">
+                    <span class="text-2xl">🌍</span>
+                    <p class="mt-2">You've experienced <span class="text-purple-400 font-bold">${formatNumber(earthRotations)}</span> Earth rotations</p>
+                </div>
+                <div class="bg-white/5 rounded-lg p-4">
+                    <span class="text-2xl">☀️</span>
+                    <p class="mt-2">You've orbited the Sun <span class="text-yellow-400 font-bold">${earthOrbits}</span> times</p>
+                </div>
+                <div class="bg-white/5 rounded-lg p-4">
+                    <span class="text-2xl">🩸</span>
+                    <p class="mt-2">Your heart has pumped <span class="text-red-400 font-bold">${formatNumber(bloodPumped)}</span> liters of blood</p>
+                </div>
+                <div class="bg-white/5 rounded-lg p-4">
+                    <span class="text-2xl">💅</span>
+                    <p class="mt-2">Your nails have grown <span class="text-pink-400 font-bold">${nailsGrown} cm</span></p>
+                </div>
+                <div class="bg-white/5 rounded-lg p-4">
+                    <span class="text-2xl">🍔</span>
+                    <p class="mt-2">You've consumed about <span class="text-orange-400 font-bold">${formatNumber(foodEaten)} kg</span> of food</p>
+                </div>
+                <div class="bg-white/5 rounded-lg p-4">
+                    <span class="text-2xl">💧</span>
+                    <p class="mt-2">You've drunk approximately <span class="text-cyan-400 font-bold">${formatNumber(waterDrank)}</span> liters of water</p>
+                </div>
+                <div class="bg-white/5 rounded-lg p-4">
+                    <span class="text-2xl">🚶</span>
+                    <p class="mt-2">You've walked roughly <span class="text-green-400 font-bold">${formatNumber(distanceWalked)} km</span></p>
+                </div>
+                <div class="bg-white/5 rounded-lg p-4">
+                    <span class="text-2xl">📱</span>
+                    <p class="mt-2">Estimated <span class="text-blue-400 font-bold">${formatNumber(timeOnPhone)}</span> hours on screens</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
